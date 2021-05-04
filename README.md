@@ -1,2 +1,3 @@
-# vp-memory
-Yu-Gi-Oh! - Card memory game
+# Yu-Gi-Oh! - Card memory game
+Just a game
+
