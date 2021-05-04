@@ -1,7 +1,7 @@
 ﻿
 namespace Yu_Gi_Oh____Memory_game
 {
-    partial class Form1
+    partial class MenuScreenForm
     {
         /// <summary>
         /// Required designer variable.

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Yu_Gi_Oh____Memory_game
 {
-    public partial class Form1 : Form
+    public partial class MenuScreenForm : Form
     {
-        public Form1()
+        public MenuScreenForm()
         {
             InitializeComponent();
         }
