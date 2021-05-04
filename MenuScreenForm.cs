@@ -12,9 +12,29 @@ namespace Yu_Gi_Oh____Memory_game
 {
     public partial class MenuScreenForm : Form
     {
+        public static MenuScreenForm MenuFormRef;
+        public static MainForm MainFormRef;
+
         public MenuScreenForm()
         {
+            MenuFormRef = this;
+
             InitializeComponent();
+        }
+
+
+        private void LoadGame(object sender, EventArgs e)
+        {
+            MenuFormRef.Hide();
+
+            MainFormRef = new MainForm();
+
+            MainFormRef.ShowDialog();
+        }
+
+        private void ExitGame(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
