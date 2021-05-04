@@ -1,5 +1,5 @@
 ﻿
-namespace Yu_Gi_Oh____Memory_game
+namespace YuGiOh
 {
     partial class MainForm
     {

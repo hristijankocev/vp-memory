@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using Newtonsoft.Json;
-using static Yu_Gi_Oh____Memory_game.MenuScreenForm;
+using static YuGiOh.MenuScreenForm;
 
-namespace Yu_Gi_Oh____Memory_game
+namespace YuGiOh
 {
     public partial class MainForm : Form
     {

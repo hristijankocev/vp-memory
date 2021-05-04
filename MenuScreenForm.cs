@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Yu_Gi_Oh____Memory_game
+namespace YuGiOh
 {
     public partial class MenuScreenForm : Form
     {

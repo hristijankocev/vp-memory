@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Yu_Gi_Oh____Memory_game
+namespace YuGiOh
 {
     static class Program
     {
