@@ -18,16 +18,26 @@ namespace YuGiOh
 {
     public partial class MainForm : Form
     {
-        private List<Card> cards;
+        private readonly List<Card> _cards;
+        private readonly List<string> _pictureBoxIds;
 
         public MainForm()
         {
-            cards = new List<Card>();
+            // Initialize lists
+            _cards = new List<Card>();
+            _pictureBoxIds = new List<string>();
 
             MainFormRef = this;
 
             InitializeComponent();
 
+            // Get the id's of all the picture box controls
+            _pictureBoxIds.AddRange(from PictureBox pictureBox in panelCards.Controls select pictureBox.Name);
+
+            // Initialize each picture box with the default yu-gi-oh! backside card picture
+            InitPictureBoxImages();
+
+            // Fill each picture box with a pic
             FillPictures();
         }
 
@@ -36,7 +46,15 @@ namespace YuGiOh
             Application.Exit();
         }
 
-        private Card GetRandomCard()
+        private void InitPictureBoxImages()
+        {
+            foreach (PictureBox pictureBox in panelCards.Controls)
+            {
+                pictureBox.Image = Properties.Resources.Back_AE;
+            }
+        }
+
+        private static Card GetRandomCard()
         {
             WebRequest request = WebRequest.Create("https://db.ygoprodeck.com/api/v7/randomcard.php");
 
@@ -50,9 +68,7 @@ namespace YuGiOh
 
             response.Close();
 
-            Card card = JsonConvert.DeserializeObject<Card>(cardJson?.ToString());
-
-            return card;
+            return cardJson == null ? null : (Card) JsonConvert.DeserializeObject<Card>(cardJson.ToString());
         }
 
         private void FillPictures()
@@ -60,50 +76,57 @@ namespace YuGiOh
             panelCards.Height = ClientRectangle.Height - 50;
             panelCards.Width = ClientRectangle.Width - 50;
 
-            foreach (PictureBox pictureBox in panelCards.Controls)
+            while (_pictureBoxIds.Count != 0)
             {
                 var card = GetRandomCard();
 
-                cards.Add(card);
+                // Ensure we get a valid card
+                if (card == null)
+                {
+                    while (true)
+                    {
+                        card = GetRandomCard();
+                        if (card != null)
+                            break;
+                    }
+                }
 
-                pictureBox.LoadAsync(card.card_images[0].image_url);
-
-                pictureBox.Click += (sender, EventArgs) => { picture_Click(sender, EventArgs, 5); };
+                // Process a pair of picture boxes
+                ProcessPictureBox(card);
+                ProcessPictureBox(card);
             }
         }
 
-
-        public void picture_Click(object sender, EventArgs e, int i)
+        private void ProcessPictureBox(Card card)
         {
-            MessageBox.Show($@"Test {i}");
+            var rnd = new Random();
+            var pictureBox =
+                (PictureBox) panelCards.Controls.Find(_pictureBoxIds.ElementAt(rnd.Next(0, _pictureBoxIds.Count)),
+                    false)[0];
+
+            _pictureBoxIds.Remove(pictureBox.Name);
+
+            pictureBox.MouseClick += (sender, mouseEventArgs) =>
+            {
+                PictureClick(sender, mouseEventArgs, card, pictureBox);
+            };
         }
 
-        private void pictureBox8_Click(object sender, EventArgs e)
-        {
-        }
 
-        private void pictureBox7_Click(object sender, EventArgs e)
+        private void PictureClick(object sender, MouseEventArgs e, Card card, PictureBox pictureBox)
         {
-        }
 
-        private void pictureBox4_Click(object sender, EventArgs e)
-        {
-        }
+            if ((e.Button & MouseButtons.Left) != 0)
+            {
+                pictureBox.LoadAsync(card.card_images[0].image_url);
+            }
 
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-        }
+            else if ((e.Button & MouseButtons.Right) != 0)
+            {
+                label1.Text = $@"Card clicked: {card.id}";
 
-        private void pictureBox6_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void pictureBox5_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
+                MessageBox.Show($"{card.name}\n{card.card_prices[0].amazon_price}");
+            }
         }
     }
 }
