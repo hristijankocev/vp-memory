@@ -20,9 +20,12 @@ namespace YuGiOh
     {
         private readonly List<Card> _cards;
         private readonly List<string> _pictureBoxIds;
+        private readonly int _numCards;
 
-        public MainForm()
+        public MainForm(int numCards)
         {
+            _numCards = numCards;
+
             // Initialize lists
             _cards = new List<Card>();
             _pictureBoxIds = new List<string>();
@@ -30,6 +33,8 @@ namespace YuGiOh
             MainFormRef = this;
 
             InitializeComponent();
+
+            CreatePictureBoxes();
 
             // Get the id's of all the picture box controls
             _pictureBoxIds.AddRange(from PictureBox pictureBox in panelCards.Controls select pictureBox.Name);
@@ -99,6 +104,7 @@ namespace YuGiOh
 
         private void ProcessPictureBox(Card card)
         {
+            // Get a random picture box from the panel and give it a card 
             var rnd = new Random();
             var pictureBox =
                 (PictureBox) panelCards.Controls.Find(_pictureBoxIds.ElementAt(rnd.Next(0, _pictureBoxIds.Count)),
@@ -115,9 +121,10 @@ namespace YuGiOh
 
         private void PictureClick(object sender, MouseEventArgs e, Card card, PictureBox pictureBox)
         {
-
             if ((e.Button & MouseButtons.Left) != 0)
             {
+                label1.Text = $@"Card clicked: {card.id}";
+
                 pictureBox.LoadAsync(card.card_images[0].image_url);
             }
 
@@ -126,6 +133,66 @@ namespace YuGiOh
                 label1.Text = $@"Card clicked: {card.id}";
 
                 MessageBox.Show($"{card.name}\n{card.card_prices[0].amazon_price}");
+            }
+        }
+
+        private void CreatePictureBoxes()
+        {
+            // Scale the form based on how many cards we have chosen to play with
+            if (_numCards == 6)
+                MainFormRef.Width += 140;
+            else if (_numCards % 8 == 0 && _numCards != 24 || _numCards == 12)
+                MainFormRef.Width += 280;
+            else if (_numCards == 24)
+                MainFormRef.Width += 580;
+            else if (_numCards % 5 == 0)
+                MainFormRef.Width += 440;
+            else if (_numCards == 22)
+                MainFormRef.Width += 1340;
+            else if (_numCards == 14)
+                MainFormRef.Width += 740;
+            else if (_numCards == 18)
+                MainFormRef.Width += 580;
+
+
+            panelCards.Height = ClientRectangle.Height;
+            panelCards.Width = ClientRectangle.Width;
+
+
+            var pointXCounter = 0;
+            const int pointXFactor = 150;
+            var pointY = 0;
+            const int pointYFactor = 180;
+            for (var i = 0; i < _numCards; i++)
+            {
+                var pointX = pointXCounter * pointXFactor;
+
+
+                // Check width boundary
+                if (pointX > panelCards.Width - 100)
+                {
+                    pointY += pointYFactor;
+                    pointXCounter = 0;
+                    pointX = pointXCounter * pointXFactor;
+                }
+
+                // Check height boundary
+                if (pointY > panelCards.Height - 100)
+                {
+                    panelCards.Height += pointYFactor;
+                }
+
+                var box = new PictureBox
+                {
+                    Name = $"pictureBox{i}",
+                    Width = 120,
+                    Height = 170,
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    Location = new Point(pointX, pointY)
+                };
+                panelCards.Controls.Add(box);
+
+                pointXCounter++;
             }
         }
     }

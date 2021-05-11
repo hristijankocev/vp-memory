@@ -21,6 +21,8 @@ namespace YuGiOh
             MenuFormRef = this;
 
             InitializeComponent();
+
+            lblNumCards.Text = $@"Number of cards: {numericUpDownNumCards.Value}";
         }
 
 
@@ -28,7 +30,7 @@ namespace YuGiOh
         {
             MenuFormRef.Hide();
 
-            MainFormRef = new MainForm();
+            MainFormRef = new MainForm((int) numericUpDownNumCards.Value);
 
             MainFormRef.ShowDialog();
         }
@@ -36,6 +38,12 @@ namespace YuGiOh
         private void ExitGame(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+
+        private void numericUpDownNumCards_ValueChanged(object sender, EventArgs e)
+        {
+            lblNumCards.Text = $@"Number of cards: {numericUpDownNumCards.Value}";
         }
     }
 }
