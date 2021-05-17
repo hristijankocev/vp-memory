@@ -22,6 +22,7 @@ namespace YuGiOh
         private readonly List<string> _pictureBoxIds;
         private readonly int _numCards;
         private CardInfoForm _cardInfoForm;
+        private Point _formPreviousLocation;
 
         public MainForm(int numCards)
         {
@@ -34,6 +35,8 @@ namespace YuGiOh
             MainFormRef = this;
 
             InitializeComponent();
+
+            _formPreviousLocation = new Point(MainFormRef.Location.X, MainFormRef.Location.Y);
 
             CreatePictureBoxes();
 
@@ -211,6 +214,21 @@ namespace YuGiOh
 
             _cardInfoForm.StartPosition = FormStartPosition.Manual;
             _cardInfoForm.SetDesktopLocation(MainFormRef.Right - 10, MainFormRef.Location.Y);
+        }
+
+
+        private void MainForm_LocationChanged_1(object sender, EventArgs e)
+        {
+            // If the main form has been moved...
+            if (_cardInfoForm == null)
+                return;
+            if (_formPreviousLocation != new Point(MainFormRef.Location.X, MainFormRef.Location.Y))
+                _cardInfoForm.Location = new Point(
+                    _cardInfoForm.Location.X + Location.X - _formPreviousLocation.X,
+                    _cardInfoForm.Location.Y + Location.Y - _formPreviousLocation.Y
+                );
+
+            _formPreviousLocation = MainFormRef.Location;
         }
     }
 }

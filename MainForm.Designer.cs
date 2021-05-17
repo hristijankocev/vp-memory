@@ -50,6 +50,7 @@ namespace YuGiOh
             this.Name = "MainForm";
             this.Text = "Yu-Gi-Oh!";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.LocationChanged += new System.EventHandler(this.MainForm_LocationChanged_1);
             this.ResumeLayout(false);
 
         }
