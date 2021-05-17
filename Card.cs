@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace YuGiOh
 {
-    class Card
+    public class Card
     {
         public int id { get; set; }
         public string name { get; set; }

@@ -21,6 +21,7 @@ namespace YuGiOh
         private readonly List<Card> _cards;
         private readonly List<string> _pictureBoxIds;
         private readonly int _numCards;
+        private CardInfoForm _cardInfoForm;
 
         public MainForm(int numCards)
         {
@@ -126,15 +127,14 @@ namespace YuGiOh
         {
             if ((e.Button & MouseButtons.Left) != 0)
             {
-                label1.Text = $@"Card clicked: {card.id}";
-
                 pictureBox.LoadAsync(card.card_images[0].image_url);
+
+                // Open a new form display the card information
+                CardInformation(card);
             }
 
             else if ((e.Button & MouseButtons.Right) != 0)
             {
-                label1.Text = $@"Card clicked: {card.id}";
-
                 MessageBox.Show($"{card.name}\n{card.card_prices[0].amazon_price}");
             }
         }
@@ -197,6 +197,20 @@ namespace YuGiOh
 
                 pointXCounter++;
             }
+        }
+
+        private void CardInformation(Card card)
+        {
+            // If there's already a form showing a card info, close it
+            _cardInfoForm?.Close();
+
+            var placementPoint = new Point(MainFormRef.Size.Width, MainFormRef.Size.Height);
+
+            _cardInfoForm = new CardInfoForm(card);
+            _cardInfoForm.Show();
+
+            _cardInfoForm.StartPosition = FormStartPosition.Manual;
+            _cardInfoForm.SetDesktopLocation(MainFormRef.Right - 10, MainFormRef.Location.Y);
         }
     }
 }
