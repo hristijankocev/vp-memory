@@ -55,7 +55,7 @@ namespace YuGiOh
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.GrayText;
-            this.ClientSize = new System.Drawing.Size(320, 383);
+            this.ClientSize = new System.Drawing.Size(321, 383);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panelCards);
             this.Name = "MainForm";

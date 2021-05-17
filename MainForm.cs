@@ -39,6 +39,9 @@ namespace YuGiOh
             // Get the id's of all the picture box controls
             _pictureBoxIds.AddRange(from PictureBox pictureBox in panelCards.Controls select pictureBox.Name);
 
+            // "Shuffle" cards
+            _pictureBoxIds = _pictureBoxIds.OrderBy(pid => Guid.NewGuid()).ToList();
+
             // Initialize each picture box with the default yu-gi-oh! backside card picture
             InitPictureBoxImages();
 
@@ -108,7 +111,7 @@ namespace YuGiOh
             var rnd = new Random();
             var pictureBox =
                 (PictureBox) panelCards.Controls.Find(_pictureBoxIds.ElementAt(rnd.Next(0, _pictureBoxIds.Count)),
-                    false)[0];
+                    true)[0];
 
             _pictureBoxIds.Remove(pictureBox.Name);
 
