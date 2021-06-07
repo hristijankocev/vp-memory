@@ -29,6 +29,7 @@ namespace YuGiOh
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EndForm));
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.numericUpDownNumCards = new System.Windows.Forms.NumericUpDown();
@@ -120,6 +121,7 @@ namespace YuGiOh
             this.Controls.Add(this.numericUpDownNumCards);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EndForm";
             this.Text = "Yu-Gi-Oh!";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumCards)).EndInit();

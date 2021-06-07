@@ -30,6 +30,7 @@ namespace YuGiOh
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panelCards = new System.Windows.Forms.Panel();
             this.timerCheckCards = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
@@ -54,6 +55,7 @@ namespace YuGiOh
             this.BackColor = System.Drawing.SystemColors.HotTrack;
             this.ClientSize = new System.Drawing.Size(321, 383);
             this.Controls.Add(this.panelCards);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Yu-Gi-Oh!";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);

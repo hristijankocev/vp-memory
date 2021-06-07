@@ -29,6 +29,7 @@ namespace YuGiOh
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CardInfoForm));
             this.lblName = new System.Windows.Forms.Label();
             this.lblAtk = new System.Windows.Forms.Label();
             this.lblDef = new System.Windows.Forms.Label();
@@ -166,6 +167,7 @@ namespace YuGiOh
             this.Controls.Add(this.lblAtk);
             this.Controls.Add(this.lblName);
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CardInfoForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "CardInfoForm";
