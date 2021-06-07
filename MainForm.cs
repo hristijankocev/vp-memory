@@ -24,6 +24,7 @@ namespace YuGiOh
         private readonly int _numCards;
         private CardInfoForm _cardInfoForm;
         private Point _formPreviousLocation;
+        private EndForm _endForm;
 
         private Card _firstCard;
         private Card _secondCard;
@@ -180,7 +181,10 @@ namespace YuGiOh
 
                     if (_cards.Count == 0)
                     {
-                        MessageBox.Show(@"You win!");
+                        _endForm?.Close();
+                        _endForm = new EndForm(MainFormRef, _cardInfoForm);
+                        _endForm.Show();
+
                         // Enable all picture boxes so we can still preview them
                         foreach (PictureBox pb in panelCards.Controls)
                         {

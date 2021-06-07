@@ -56,6 +56,12 @@
     <Compile Include="CardInfoForm.Designer.cs">
       <DependentUpon>CardInfoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EndForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EndForm.Designer.cs">
+      <DependentUpon>EndForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +78,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CardInfoForm.resx">
       <DependentUpon>CardInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EndForm.resx">
+      <DependentUpon>EndForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

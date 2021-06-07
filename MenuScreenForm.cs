@@ -32,7 +32,7 @@ namespace YuGiOh
 
             MainFormRef = new MainForm((int) numericUpDownNumCards.Value);
 
-            MainFormRef.ShowDialog();
+            MainFormRef.Show();
         }
 
         private void ExitGame(object sender, EventArgs e)

@@ -14,6 +14,8 @@ namespace YuGiOh
     {
         public CardInfoForm(Card card)
         {
+            if (card == null)
+                return;
             InitializeComponent();
 
             lblName.Text = card.name;
