@@ -108,9 +108,6 @@ namespace YuGiOh
                 // Add card id to the hashset
                 _cards.Add(card.id);
 
-                card.clicked = false;
-                card.uniqueId = Guid.NewGuid().ToString();
-
                 // Process a pair of picture boxes
                 ProcessPictureBox(card);
                 ProcessPictureBox(card);
