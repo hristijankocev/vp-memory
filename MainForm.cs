@@ -303,6 +303,10 @@ namespace YuGiOh
 
         private void CardInformation(Card card)
         {
+            // If it's the same card, but a different picture box do nothing
+            if (CardInfoForm._card?.card_images[0].image_url == card.card_images[0].image_url)
+                return;
+
             // If there's already a form showing a card info, close it
             _cardInfoForm?.Close();
 
