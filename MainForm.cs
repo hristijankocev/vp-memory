@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.Remoting.Channels;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -132,13 +133,10 @@ namespace YuGiOh
 
             _pictureBoxIds.Remove(pictureBox.Name);
 
-            // Unique id so we can identify the picture 
-            // pictureBox.Name = card.uniqueId;
             if (card.pictureBoxes == null)
             {
                 card.pictureBoxes = new List<string>();
             }
-
             card.pictureBoxes.Add(pictureBox.Name);
 
             pictureBox.MouseClick += (sender, mouseEventArgs) =>
@@ -163,6 +161,8 @@ namespace YuGiOh
                 // First card is not clicked at the start or when we get a card match
                 if (!_firstCard.clicked)
                 {
+                    pictureBox.Enabled = false;
+
                     _firstCard = card;
                     _firstCard.clicked = true;
                     return;
@@ -209,6 +209,9 @@ namespace YuGiOh
                 if (pictureBox.Image == Properties.Resources.Back_AE)
                     continue;
 
+                // If we got to this point, two cards have been opened and they were not the same one
+                // Gotta enable the card which we disabled previously to prevent clicking the same card
+                pictureBox.Enabled = true;
                 pictureBox.Image = Properties.Resources.Back_AE;
             }
 
