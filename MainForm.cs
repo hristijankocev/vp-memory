@@ -24,8 +24,14 @@ namespace YuGiOh
         private CardInfoForm _cardInfoForm;
         private Point _formPreviousLocation;
 
+        private Card _firstCard;
+        private Card _secondCard;
+
         public MainForm(int numCards)
         {
+            _firstCard = new Card();
+            _secondCard = new Card();
+
             _numCards = numCards;
 
             // Initialize lists
@@ -98,10 +104,13 @@ namespace YuGiOh
                     while (true)
                     {
                         card = GetRandomCard();
-                        if (card != null)
-                            break;
+                        if (card == null) continue;
+                        break;
                     }
                 }
+
+                card.clicked = false;
+                card.uniqueId = Guid.NewGuid().ToString();
 
                 // Process a pair of picture boxes
                 ProcessPictureBox(card);
@@ -115,9 +124,12 @@ namespace YuGiOh
             var rnd = new Random();
             var pictureBox =
                 (PictureBox) panelCards.Controls.Find(_pictureBoxIds.ElementAt(rnd.Next(0, _pictureBoxIds.Count)),
-                    true)[0];
+                    false)[0];
 
             _pictureBoxIds.Remove(pictureBox.Name);
+
+            // Unique id so we can identify the picture 
+            pictureBox.Name = card.uniqueId;
 
             pictureBox.MouseClick += (sender, mouseEventArgs) =>
             {
@@ -130,16 +142,57 @@ namespace YuGiOh
         {
             if ((e.Button & MouseButtons.Left) != 0)
             {
-                pictureBox.LoadAsync(card.card_images[0].image_url);
+                if (_firstCard.clicked && _secondCard.clicked)
+                    return;
 
                 // Open a new form display the card information
                 CardInformation(card);
+
+                pictureBox.LoadAsync(card.card_images[0].image_url);
+
+
+                // First card is not clicked at the start or when we get a card match
+                if (!_firstCard.clicked)
+                {
+                    _firstCard = card;
+                    _firstCard.clicked = true;
+
+                    label1.Text = _firstCard.id.ToString();
+                    return;
+                }
+
+
+                _secondCard = card;
+                _secondCard.clicked = true;
+
+                label2.Text = _secondCard.id.ToString();
+
+                timerCheckCards.Start();
+            }
+        }
+
+        private void timerCheckCards_Tick(object sender, EventArgs e)
+        {
+            timerCheckCards.Stop();
+
+            // Get the picture boxes tied with the specific card id
+            var pictureBox1 = (PictureBox) panelCards.Controls.Find(_firstCard.uniqueId, true)[0];
+            if (pictureBox1.Image.Equals(Properties.Resources.Back_AE))
+            {
+                pictureBox1 = (PictureBox) panelCards.Controls.Find(_firstCard.uniqueId, true)[1];
             }
 
-            else if ((e.Button & MouseButtons.Right) != 0)
-            {
-                MessageBox.Show($"{card.name}\n{card.card_prices[0].amazon_price}");
-            }
+
+            var pictureBox2 = (PictureBox) panelCards.Controls.Find(_secondCard.uniqueId, false)[0];
+
+            // Reset card images to the back image
+            pictureBox1.Image = Properties.Resources.Back_AE;
+            pictureBox2.Image = Properties.Resources.Back_AE;
+
+
+            // Reset active cards
+            _firstCard = new Card();
+            _secondCard = new Card();
         }
 
         private void CreatePictureBoxes()
@@ -206,8 +259,6 @@ namespace YuGiOh
         {
             // If there's already a form showing a card info, close it
             _cardInfoForm?.Close();
-
-            var placementPoint = new Point(MainFormRef.Size.Width, MainFormRef.Size.Height);
 
             _cardInfoForm = new CardInfoForm(card);
             _cardInfoForm.Show();

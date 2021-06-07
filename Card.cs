@@ -8,6 +8,22 @@ namespace YuGiOh
 {
     public class Card
     {
+        public Card()
+        {
+        }
+
+        // Copy constructor
+        public Card(Card other)
+        {
+            id = other.id;
+            name = other.name;
+            desc = other.desc;
+            atk = other.atk;
+            def = other.def;
+            card_images = other.card_images;
+            card_prices = other.card_prices;
+        }
+
         public int id { get; set; }
         public string name { get; set; }
         public string type { get; set; }
@@ -20,6 +36,10 @@ namespace YuGiOh
         public List<CardSet> card_sets { get; set; }
         public List<CardImage> card_images { get; set; }
         public List<CardPrice> card_prices { get; set; }
+
+        public bool clicked { get; set; }
+        public string uniqueId { get; set; }
+
     }
 
     public class CardSet
