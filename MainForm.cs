@@ -129,7 +129,13 @@ namespace YuGiOh
             _pictureBoxIds.Remove(pictureBox.Name);
 
             // Unique id so we can identify the picture 
-            pictureBox.Name = card.uniqueId;
+            // pictureBox.Name = card.uniqueId;
+            if (card.pictureBoxes == null)
+            {
+                card.pictureBoxes = new List<string>();
+            }
+
+            card.pictureBoxes.Add(pictureBox.Name);
 
             pictureBox.MouseClick += (sender, mouseEventArgs) =>
             {
@@ -175,19 +181,43 @@ namespace YuGiOh
         {
             timerCheckCards.Stop();
 
-            // Get the picture boxes tied with the specific card id
-            var pictureBox1 = (PictureBox) panelCards.Controls.Find(_firstCard.uniqueId, true)[0];
-            if (pictureBox1.Image.Equals(Properties.Resources.Back_AE))
+
+            foreach (var pb in _firstCard.pictureBoxes)
             {
-                pictureBox1 = (PictureBox) panelCards.Controls.Find(_firstCard.uniqueId, true)[1];
+                var pictureBox = (PictureBox) panelCards.Controls.Find(pb, false)[0];
+
+                // If the pic has the back image already, it means the other pic box needs to be changed
+                if (pictureBox.Image == Properties.Resources.Back_AE)
+                    continue;
+
+                pictureBox.Image = Properties.Resources.Back_AE;
+            }
+
+            foreach (var pb in _secondCard.pictureBoxes)
+            {
+                var pictureBox = (PictureBox) panelCards.Controls.Find(pb, false)[0];
+
+                // If the pic has the back image already, it means the other pic box needs to be changed
+                if (pictureBox.Image == Properties.Resources.Back_AE)
+                    continue;
+
+                pictureBox.Image = Properties.Resources.Back_AE;
             }
 
 
-            var pictureBox2 = (PictureBox) panelCards.Controls.Find(_secondCard.uniqueId, false)[0];
-
-            // Reset card images to the back image
-            pictureBox1.Image = Properties.Resources.Back_AE;
-            pictureBox2.Image = Properties.Resources.Back_AE;
+            // // Get the picture boxes tied with the specific card id
+            // var pictureBox1 = (PictureBox) panelCards.Controls.Find(_firstCard.uniqueId, true)[0];
+            // if (pictureBox1.Image.Equals(Properties.Resources.Back_AE))
+            // {
+            //     pictureBox1 = (PictureBox) panelCards.Controls.Find(_firstCard.uniqueId, true)[1];
+            // }
+            //
+            //
+            // var pictureBox2 = (PictureBox) panelCards.Controls.Find(_secondCard.uniqueId, false)[0];
+            //
+            // // Reset card images to the back image
+            // pictureBox1.Image = Properties.Resources.Back_AE;
+            // pictureBox2.Image = Properties.Resources.Back_AE;
 
 
             // Reset active cards
