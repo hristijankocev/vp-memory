@@ -138,6 +138,18 @@ namespace YuGiOh
             {
                 PictureClick(sender, mouseEventArgs, card, pictureBox);
             };
+
+            pictureBox.MouseEnter += (sender, e) =>
+            {
+                pictureBox.Width -= 5;
+                pictureBox.Height -= 5;
+            };
+
+            pictureBox.MouseLeave += (sender, e) =>
+            {
+                pictureBox.Width += 5;
+                pictureBox.Height += 5;
+            };
         }
 
 
