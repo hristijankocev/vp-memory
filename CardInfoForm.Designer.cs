@@ -83,6 +83,7 @@ namespace YuGiOh
             this.tbDesc.ReadOnly = true;
             this.tbDesc.Size = new System.Drawing.Size(552, 95);
             this.tbDesc.TabIndex = 4;
+            this.tbDesc.TabStop = false;
             // 
             // pbCard
             // 
@@ -150,7 +151,7 @@ namespace YuGiOh
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.BackColor = System.Drawing.SystemColors.HotTrack;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(573, 543);
