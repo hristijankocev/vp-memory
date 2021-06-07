@@ -18,7 +18,7 @@ namespace YuGiOh
 {
     public partial class MainForm : Form
     {
-        private readonly List<Card> _cards;
+        private readonly HashSet<int> _cards;
         private readonly List<string> _pictureBoxIds;
         private readonly int _numCards;
         private CardInfoForm _cardInfoForm;
@@ -34,8 +34,9 @@ namespace YuGiOh
 
             _numCards = numCards;
 
-            // Initialize lists
-            _cards = new List<Card>();
+            // Set will contain id's of pictures, will use it to check if we matched all cards
+            _cards = new HashSet<int>();
+
             _pictureBoxIds = new List<string>();
 
             MainFormRef = this;
@@ -109,6 +110,9 @@ namespace YuGiOh
                     }
                 }
 
+                // Add card id to the hashset
+                _cards.Add(card.id);
+
                 card.clicked = false;
                 card.uniqueId = Guid.NewGuid().ToString();
 
@@ -156,22 +160,38 @@ namespace YuGiOh
 
                 pictureBox.LoadAsync(card.card_images[0].image_url);
 
-
                 // First card is not clicked at the start or when we get a card match
                 if (!_firstCard.clicked)
                 {
                     _firstCard = card;
                     _firstCard.clicked = true;
-
-                    label1.Text = _firstCard.id.ToString();
                     return;
                 }
 
-
+                // With the previous check if statement, we are sure that this will be the second card
                 _secondCard = card;
                 _secondCard.clicked = true;
 
-                label2.Text = _secondCard.id.ToString();
+                if (_firstCard.id == _secondCard.id)
+                {
+                    // Remove card from the hashset
+                    _cards.Remove(_firstCard.id);
+
+                    if (_cards.Count == 0)
+                    {
+                        MessageBox.Show(@"You win!");
+                    }
+
+                    // Disable both picture boxes associated with the image
+                    foreach (var pb in _firstCard.pictureBoxes)
+                    {
+                        panelCards.Controls.Find(pb, true)[0].Enabled = false;
+                    }
+
+                    _firstCard = new Card();
+                    _secondCard = new Card();
+                    return;
+                }
 
                 timerCheckCards.Start();
             }
@@ -180,7 +200,6 @@ namespace YuGiOh
         private void timerCheckCards_Tick(object sender, EventArgs e)
         {
             timerCheckCards.Stop();
-
 
             foreach (var pb in _firstCard.pictureBoxes)
             {
@@ -203,22 +222,6 @@ namespace YuGiOh
 
                 pictureBox.Image = Properties.Resources.Back_AE;
             }
-
-
-            // // Get the picture boxes tied with the specific card id
-            // var pictureBox1 = (PictureBox) panelCards.Controls.Find(_firstCard.uniqueId, true)[0];
-            // if (pictureBox1.Image.Equals(Properties.Resources.Back_AE))
-            // {
-            //     pictureBox1 = (PictureBox) panelCards.Controls.Find(_firstCard.uniqueId, true)[1];
-            // }
-            //
-            //
-            // var pictureBox2 = (PictureBox) panelCards.Controls.Find(_secondCard.uniqueId, false)[0];
-            //
-            // // Reset card images to the back image
-            // pictureBox1.Image = Properties.Resources.Back_AE;
-            // pictureBox2.Image = Properties.Resources.Back_AE;
-
 
             // Reset active cards
             _firstCard = new Card();
