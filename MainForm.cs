@@ -137,6 +137,7 @@ namespace YuGiOh
             {
                 card.pictureBoxes = new List<string>();
             }
+
             card.pictureBoxes.Add(pictureBox.Name);
 
             pictureBox.MouseClick += (sender, mouseEventArgs) =>
@@ -148,7 +149,7 @@ namespace YuGiOh
 
         private void PictureClick(object sender, MouseEventArgs e, Card card, PictureBox pictureBox)
         {
-            if ((e.Button & MouseButtons.Left) != 0)
+            if (((e.Button & MouseButtons.Left) != 0) && _cards.Count != 0)
             {
                 if (_firstCard.clicked && _secondCard.clicked)
                     return;
@@ -180,6 +181,13 @@ namespace YuGiOh
                     if (_cards.Count == 0)
                     {
                         MessageBox.Show(@"You win!");
+                        // Enable all picture boxes so we can still preview them
+                        foreach (PictureBox pb in panelCards.Controls)
+                        {
+                            pb.Enabled = true;
+                        }
+
+                        return;
                     }
 
                     // Disable both picture boxes associated with the image
@@ -194,6 +202,11 @@ namespace YuGiOh
                 }
 
                 timerCheckCards.Start();
+            }
+            // We finished the game, but you can still preview the cards info with right clicking them
+            else if ((e.Button & MouseButtons.Right) != 0 && _cards.Count == 0)
+            {
+                CardInformation(card);
             }
         }
 
