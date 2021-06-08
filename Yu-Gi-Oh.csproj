@@ -49,43 +49,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Card.cs" />
-    <Compile Include="CardInfoForm.cs">
+    <Compile Include="Yu-Gi-Oh\Card.cs" />
+    <Compile Include="Yu-Gi-Oh\CardInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CardInfoForm.Designer.cs">
+    <Compile Include="Yu-Gi-Oh\CardInfoForm.Designer.cs">
       <DependentUpon>CardInfoForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EndForm.cs">
+    <Compile Include="Yu-Gi-Oh\EndForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EndForm.Designer.cs">
+    <Compile Include="Yu-Gi-Oh\EndForm.Designer.cs">
       <DependentUpon>EndForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Yu-Gi-Oh\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Yu-Gi-Oh\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuScreenForm.cs">
+    <Compile Include="Yu-Gi-Oh\MenuScreenForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MenuScreenForm.Designer.cs">
+    <Compile Include="Yu-Gi-Oh\MenuScreenForm.Designer.cs">
       <DependentUpon>MenuScreenForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Yu-Gi-Oh\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CardInfoForm.resx">
+    <EmbeddedResource Include="Yu-Gi-Oh\CardInfoForm.resx">
       <DependentUpon>CardInfoForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EndForm.resx">
+    <EmbeddedResource Include="Yu-Gi-Oh\EndForm.resx">
       <DependentUpon>EndForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Yu-Gi-Oh\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MenuScreenForm.resx">
+    <EmbeddedResource Include="Yu-Gi-Oh\MenuScreenForm.resx">
       <DependentUpon>MenuScreenForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -98,7 +98,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="packages.config" />
+    <None Include="Yu-Gi-Oh\packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -110,10 +110,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="Yu-Gi-Oh\App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Back-AE.png" />
+    <Content Include="Yu-Gi-Oh\Images\Back-AE.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
